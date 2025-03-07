@@ -1,0 +1,54 @@
+﻿Name;Pinyin;AltName;Gender;Nationality;Birthplace2;Birthplace;Generation;BirthYear;DeathYear;age_at_death;edu_country_main;edu_country2;occupation_main;occupation2;Party2;field;sentiment;topicluster;corpus
+孔襄我;Kong Xiangwo;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Negative;Treaties/Diplomacy;liumei
+從予;Cong Yu;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Negative;Treaties/Diplomacy;liumei
+潘楚基;Pan Chuji;;Male;Chinese;NA;NA;NA;NA;NA;NA;USA;USA;scholar-official;social sciences;NA;scholar (economics), diplomat;Negative;Social/Political Reform;liumei
+王汝鼎;Wang Ruding;;Male;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;scholar-official;humanities;NA;politician, official;Negative;Literature/Civilization;liumei
+邵挺;Shao Ting;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Negative;Life in America;liumei
+吳德彰;Wu Dezhang;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Education/Academia;liumei
+周綬章;Zhou Shouzhang;;Male;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;scholar;social sciences;NA;economist?;Positive;Social/Political Reform;liumei
+哲生;Zhe Sheng;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Life in America;liumei
+尙一;Shang Yi;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Treaties/Diplomacy;liumei
+文宙;Wen Zhou;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Social/Political Reform;liumei
+朔一;Shuo Yi;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Treaties/Diplomacy;liumei
+沈文輔;Shen Wenfu;;Male;Chinese;NA;NA;NA;NA;NA;NA;USA;USA;scholar-official;social sciences;NA;economist, bureaucrat;Positive;Social/Political Reform;liumei
+童志仁;Tong Zhiren;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;scholar;humanities;NA;NA;Positive;Treaties/Diplomacy;liumei
+謝仁;Xie Ren;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Education/Academia;liumei
+陳嘉異;Chen Jiayi;;Male;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;scholar;humanities;NA;intellectual, writer, philosopher;Positive;Literature/Civilization;liumei
+頌皋;Song Gao;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Treaties/Diplomacy;liumei
+頌華;Song Hua;;NA;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;Positive;Literature/Civilization;liumei
+大島高精;Oshima, Takayoshi;;Male;Japanese;Abroad;Oita;1860-1894;1885;1964;79;USA;USA;official-bureaucrat;military;NA;politician;Positive;Treaties/Diplomacy;liumei
+Curtis, Lionel;Curtis, Lionel;;Male;British;Abroad;UK;1860-1894;1872;1955;83;Europe;UK;scholar-official;humanities;NA;NA;Positive;Treaties/Diplomacy;liumei
+Russell, Bertrand;Russell, Bertrand;;Male;British;Abroad;UK;1860-1894;1872;1970;98;Europe;UK;scholar;humanities;NA;philosopher, logician, mathematician, historian, writer, social critic, political activist and Nobel laureate;Positive;Social/Political Reform;liumei
+Powell, J.B.;Powell, J.B.;;Male;American;Abroad;USA;1860-1894;1886;1947;61;USA;USA;professional writer;journalist;NA;journalism;Negative;Treaties/Diplomacy;liumei
+胡適;Hu Shi;;Male;Chinese;Other;安徽;1860-1894;1891;1962;71;Japan-USA;Japan, USA;scholar-official;humanities;NA;intellectual, scholar, politician, diplomat;Negative;Literature/Civilization;liumei
+高一涵;Gao Yihan;;Male;Chinese;Other;安徽;1860-1894;1885;1968;83;Japan;Japan;scholar;social sciences;GMD-CCP-DL;intellectual and political scientist;Positive;Social/Political Reform;liumei
+溫崇信;Wen Chongxin;;Male;Chinese;Other;廣東;1895-1911;NA;NA;NA;USA;USA;official-bureaucrat;local magistrate;NA;official, bureaucrat;Negative;Life in America;liumei
+陳序經;Chen Xujing;;Male;Chinese;Other;廣東;1895-1911;1903;1967;64;USA;USA;scholar;social sciences;NA;sociologist;Positive;Literature/Civilization;liumei
+吳澤霖;Wu Zelin;;Male;Chinese;江蘇;江蘇;1895-1911;1898;1990;92;USA;USA;scholar;social sciences;NA;scholar (sociologist, ethnologist, anthropologist, folklorist, museologist, educator);Negative;Life in America;liumei
+周厚坤;Zhou Houkun;;Male;Chinese;江蘇;江蘇;1860-1894;1889;1960;71;USA;USA;other;engineer;NA;engineer;Negative;Literature/Civilization;liumei
+楊錦森;Yang Jinsen;;Male;Chinese;江蘇;江蘇;1860-1894;1889;1916;27;USA;USA;professional writer;translator;NA;writer, translator, editor;Negative;Literature/Civilization;liumei
+孫本文;Sun Benwen;;Male;Chinese;江蘇;江蘇;1860-1894;1892;1979;87;USA;USA;scholar;social sciences;NA;scholar (sociologist);Positive;Education/Academia;liumei
+王祖廉;Wang Zulian;;Male;Chinese;江蘇;江蘇;1895-1911;1896;NA;NA;USA;USA;other;banking;NA;scholar, economist, banker;Positive;Life in America;liumei
+陳植;Chen Zhi;;Male;Chinese;江蘇;江蘇;1895-1911;1902;2001;99;USA;USA;other;architect;NA;architect;Positive;Education/Academia;liumei
+顧毓琇;Gu Yuxiu;;Male;Chinese;江蘇;江蘇;1895-1911;1902;2002;100;USA;USA;other;engineer;NA;engineer, musician, novelist, poet, and politician;Positive;Social/Political Reform;liumei
+王造時;Wang Zaoshi;;Male;Chinese;江西;江西;1895-1911;1903;1971;68;USA;USA, UK;scholar;social sciences;DL;lawyer, scholar;Negative;Social/Political Reform;liumei
+胡先驌;Hu Xiansu;;Male;Chinese;江西;江西;1860-1894;1894;1968;74;USA;USA;scholar;natural sciences;NA;botanist, educator, cultural scholar;Positive;Education/Academia;liumei
+郭一岑;Guo Yicen;;Male;Chinese;江西;江西;1860-1894;1894;1977;83;Europe;Germany;scholar;social sciences;NA;scholar, psychologist;Positive;Education/Academia;liumei
+任以都;Ren Yidu;;Female;Chinese;河北;河北;1912-1949;1921;2021;100;USA;USA;scholar;social sciences;NA;scholar (historian);Positive;Social/Political Reform;liumei
+祁森煥;Qi Senhuan;;Male;Chinese;河北;河北;1895-1911;1899;NA;NA;China-NA;NA;professional writer;translator;NA;translator;Positive;Education/Academia;liumei
+許君遠;Xu Junyuan;;Male;Chinese;河北;河北;1895-1911;1902;1962;60;China-NA;China;professional writer;journalist;NA;writer, translator, editor, journalist;Positive;Life in America;liumei
+潘公展;Pan Gongzhan;;Male;Chinese;浙江;浙江;1895-1911;1895;1975;80;China-NA;China;official-bureaucrat;municipal administration;GMD;politician;Negative;Treaties/Diplomacy;liumei
+羅家倫;Luo Jialun;;Male;Chinese;浙江;浙江;1895-1911;1897;1969;72;USA;USA;scholar-official;social sciences;GMD;scholar (historian), politician, diplomat;Negative;Treaties/Diplomacy;liumei
+蔡元培;Cai Yuanpei;;Male;Chinese;浙江;浙江;1860-1894;1868;1940;72;Japan;Japan, France, Germany;scholar-official;humanities;TMH-GMD;scholar-official;Negative;Education/Academia;liumei
+周由廑;Zhou Youjin;T. T. Eugene Tseu;Male;Chinese;浙江;浙江;1860-1894;1882;NA;NA;China-NA;China;scholar;humanities;NA;educator and writer;Positive;Education/Academia;liumei
+徐寶謙;Xu Baoqian;;Male;Chinese;浙江;浙江;1860-1894;1892;1944;52;USA;USA;scholar;humanities;NA;educator, philosopher, theologist, YMCA leader;Positive;Life in America;liumei
+杜佐周;Du Zuozhou;;Male;Chinese;浙江;浙江;1895-1911;1895;1974;79;USA;USA;scholar;humanities;NA;educator, writer and psychologist;Positive;Life in America;liumei
+樓桐孫;Lou Tongsun;;Male;Chinese;浙江;浙江;1895-1911;1896;1992;96;Europe;France;scholar;social sciences;NA;scholar (jurist, translator);Positive;Social/Political Reform;liumei
+陸費執;Lu Feizhi;;Male;Chinese;浙江;浙江;1860-1894;1886;1941;55;China-NA;China;professional writer;publisher;NA;educator, publisher;Positive;Life in America;liumei
+莊澤宣;Zhuang Zexuan;;Male;Chinese;Other;湖北;1895-1911;1896;1976;80;USA;USA;scholar;social sciences;NA;scholar (psychology), educator;Positive;Social/Political Reform;liumei
+衞挺生;Wei Tingsheng;;Male;Chinese;Other;湖北;1860-1894;1890;1977;87;USA;USA;scholar;social sciences;NA;scholar (economist, historian);Positive;Social/Political Reform;liumei
+王毓祥;Wang Yuxiang;;Male;Chinese;Other;湖南;1860-1894;1886;1949;63;USA;USA;scholar;social sciences;NA;educator, scholar (economics);Negative;Treaties/Diplomacy;liumei
+曾昭掄;Ceng Zhaolun;;Male;Chinese;Other;湖南;1895-1911;1899;1967;68;USA;USA;scholar-official;natural sciences;NA;chemist, politician;Positive;Education/Academia;liumei
+檀仁梅;Tan Renmei;;Male;Chinese;Other;福建;1895-1911;1908;1993;85;USA;USA;scholar;humanities;GMD;educator, scholar (philosophy);Positive;Education/Academia;liumei
+姚大榮;Yao Darong;;Male;Chinese;Other;貴州;1860-1894;1860;1939;79;China-NA;China;scholar-official;humanities;NA;scholar-official (jinshi, late Qing official);Negative;Literature/Civilization;liumei
+周守一;Zhou Shouyi;;Male;Chinese;Other;遼寧;1895-1911;1897;NA;NA;Japan-USA;Japan, USA;scholar;social sciences;NA;scholar (economics), educator;Positive;Social/Political Reform;liumei

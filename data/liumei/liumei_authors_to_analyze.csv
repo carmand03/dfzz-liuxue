@@ -1,0 +1,54 @@
+﻿Name;Pinyin;AltName;Gender;Nationality;Birthplace;Birthplace2;BirthYear;DeathYear;Generation;Education Country;Country of Education;Occupation;Occupation2;Party;Specialization;Corpus;Sentiment;Topic
+吳德彰;Wu Dezhang;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T5. Regulation/Organization
+周由廑;Zhou Youjin;T. T. Eugene Tseu;Male;Chinese;浙江;浙江;1882;;Pre1895;China-NA;China;scholar;humanities;;educator and writer;liumei;Positive;T5. Regulation/Organization
+周綬章;Zhou Shouzhang;;Male;Chinese;;;;;;China-NA;;scholar;social sciences;;economist?;liumei;Positive;T3. Society/Culture
+哲生;Zhe Sheng;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T3. Society/Culture
+姚大榮;Yao Darong;;Male;Chinese;貴州;Other;1860;1939;Pre1895;China-NA;China;scholar-official;humanities;;scholar-official (jinshi, late Qing official);liumei;Negative;T2. International Treaties
+孔襄我;Kong Xiangwo;;;Chinese;;;;;;China-NA;;;;;;liumei;Negative;T4. Immigration/Economy
+尙一;Shang Yi;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T5. Regulation/Organization
+從予;Cong Yu;;;Chinese;;;;;;China-NA;;;;;;liumei;Negative;T1. East/West
+文宙;Wen Zhou;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T1. East/West
+朔一;Shuo Yi;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T2. International Treaties
+潘公展;Pan Gongzhan;;Male;Chinese;浙江;浙江;1895;1975;Post1895;China-NA;China;official-bureaucrat;municipal administration;GMD;politician;liumei;Negative;T3. Society/Culture
+王汝鼎;Wang Ruding;;Male;Chinese;;;;;Pre1895;China-NA;;scholar-official;humanities;;politician, official;liumei;Negative;T5. Regulation/Organization
+祁森煥;Qi Senhuan;;Male;Chinese;河北;河北;1899;;Post1895;China-NA;;professional writer;translator;;translator;liumei;Positive;T2. International Treaties
+童志仁;Tong Zhiren;;;Chinese;;;;;;China-NA;;scholar;humanities;;;liumei;Positive;T2. International Treaties
+許君遠;Xu Junyuan;;Male;Chinese;河北;河北;1902;1962;Post1895;China-NA;China;professional writer;journalist;;writer, translator, editor, journalist;liumei;Positive;T3. Society/Culture
+謝仁;Xie Ren;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T1. East/West
+邵挺;Shao Ting;;;Chinese;;;;;;China-NA;;;;;;liumei;Negative;T5. Regulation/Organization
+陳嘉異;Chen Jiayi;;Male;Chinese;;;;;Pre1895;China-NA;;scholar;humanities;;intellectual, writer, philosopher;liumei;Positive;T2. International Treaties
+陸費執;Lu Feizhi;;Male;Chinese;浙江;浙江;1886;1941;Pre1895;China-NA;China;professional writer;publisher;;educator, publisher;liumei;Positive;T5. Regulation/Organization
+頌皋;Song Gao;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T5. Regulation/Organization
+頌華;Song Hua;;;Chinese;;;;;;China-NA;;;;;;liumei;Positive;T2. International Treaties
+Curtis, Lionel;Curtis, Lionel;;Male;British;UK;Abroad;1872;1955;Pre1895;Europe;UK;scholar-official;humanities;;;liumei;Positive;T2. International Treaties
+Russell, Bertrand;Russell, Bertrand;;Male;British;UK;Abroad;1872;1970;Pre1895;Europe;UK;scholar;humanities;;philosopher, logician, mathematician, historian, writer, social critic, political activist and Nobel laureate;liumei;Positive;T3. Society/Culture
+樓桐孫;Lou Tongsun;;Male;Chinese;浙江;浙江;1896;1992;Post1895;Europe;France;scholar;social sciences;;scholar (jurist, translator);liumei;Positive;T1. East/West
+郭一岑;Guo Yicen;;Male;Chinese;江西;江西;1894;1977;Pre1895;Europe;Germany;scholar;social sciences;;scholar, psychologist;liumei;Positive;T5. Regulation/Organization
+蔡元培;Cai Yuanpei;;Male;Chinese;浙江;浙江;1868;1940;Pre1895;Japan;Japan, France, Germany;scholar-official;humanities;TMH-GMD;scholar-official;liumei;Negative;T1. East/West
+高一涵;Gao Yihan;;Male;Chinese;安徽;Other;1885;1968;Pre1895;Japan;Japan;scholar;social sciences;GMD-DL;intellectual and political scientist;liumei;Positive;T2. International Treaties
+周守一;Zhou Shouyi;;Male;Chinese;遼寧;Other;1897;;Post1895;Japan-USA;Japan, USA;scholar;social sciences;;scholar (economics), educator;liumei;Positive;T4. Immigration/Economy
+胡適;Hu Shi;;Male;Chinese;安徽;Other;1891;1962;Pre1895;Japan-USA;Japan, USA;scholar-official;humanities;;intellectual, scholar, politician, diplomat;liumei;Negative;T5. Regulation/Organization
+Powell, J.B.;Powell, J.B.;;Male;American;USA;Abroad;1886;1947;Pre1895;USA;USA;professional writer;journalist;;journalism;liumei;Negative;T2. International Treaties
+任以都;Ren Yidu;;Female;Chinese;河北;河北;1921;2021;Post1895;USA;USA;scholar;social sciences;;scholar (historian);liumei;Positive;T4. Immigration/Economy
+吳澤霖;Wu Zelin;;Male;Chinese;江蘇;江蘇;1898;1990;Post1895;USA;USA;scholar;social sciences;;scholar (sociologist, ethnologist, anthropologist, folklorist, museologist, educator);liumei;Negative;T2. International Treaties
+周厚坤;Zhou Houkun;;Male;Chinese;江蘇;江蘇;1889;1960;Pre1895;USA;USA;other;engineer;;engineer;liumei;Negative;T5. Regulation/Organization
+大島高精;Oshima, Takayoshi;;Male;Japanese;Oita;Abroad;1885;1964;Pre1895;USA;USA;official-bureaucrat;military;;politician;liumei;Positive;T2. International Treaties
+孫本文;Sun Benwen;;Male;Chinese;江蘇;江蘇;1892;1979;Pre1895;USA;USA;scholar;social sciences;;scholar (sociologist);liumei;Positive;T5. Regulation/Organization
+徐寶謙;Xu Baoqian;;Male;Chinese;浙江;浙江;1892;1944;Pre1895;USA;USA;scholar;humanities;;educator, philosopher, theologist, YMCA leader;liumei;Positive;T2. International Treaties
+曾昭掄;Ceng Zhaolun;;Male;Chinese;湖南;Other;1899;1967;Post1895;USA;USA;scholar-official;natural sciences;;chemist, politician;liumei;Positive;T3. Society/Culture
+杜佐周;Du Zuozhou;;Male;Chinese;浙江;浙江;1895;1974;Post1895;USA;USA;scholar;humanities;;educator, writer and psychologist;liumei;Positive;T1. East/West
+楊錦森;Yang Jinsen;;Male;Chinese;江蘇;江蘇;1889;1916;Pre1895;USA;USA;professional writer;translator;;writer, translator, editor;liumei;Negative;T5. Regulation/Organization
+檀仁梅;Tan Renmei;;Male;Chinese;福建;Other;1908;1993;Post1895;USA;USA;scholar;humanities;GMD;educator, scholar (philosophy);liumei;Positive;T4. Immigration/Economy
+沈文輔;Shen Wenfu;;Male;Chinese;;;;;;USA;USA;scholar-official;social sciences;;economist, bureaucrat;liumei;Positive;T3. Society/Culture
+溫崇信;Wen Chongxin;;Male;Chinese;廣東;Other;;;Post1895;USA;USA;official-bureaucrat;local magistrate;;official, bureaucrat;liumei;Negative;T1. East/West
+潘楚基;Pan Chuji;;Male;Chinese;;;;;;USA;USA;scholar-official;social sciences;;scholar (economics), diplomat;liumei;Negative;T1. East/West
+王毓祥;Wang Yuxiang;;Male;Chinese;湖南;Other;1886;1949;Pre1895;USA;USA;scholar;social sciences;;educator, scholar (economics);liumei;Negative;T4. Immigration/Economy
+王祖廉;Wang Zulian;;Male;Chinese;江蘇;江蘇;1896;;Post1895;USA;USA;other;banking;;scholar, economist, banker;liumei;Positive;T3. Society/Culture
+王造時;Wang Zaoshi;;Male;Chinese;江西;江西;1903;1971;Post1895;USA;USA, UK;scholar;social sciences;DL;lawyer, scholar;liumei;Negative;T3. Society/Culture
+羅家倫;Luo Jialun;;Male;Chinese;浙江;浙江;1897;1969;Post1895;USA;USA;scholar-official;social sciences;GMD;scholar (historian), politician, diplomat;liumei;Negative;T2. International Treaties
+胡先驌;Hu Xiansu;;Male;Chinese;江西;江西;1894;1968;Pre1895;USA;USA;scholar;natural sciences;;botanist, educator, cultural scholar;liumei;Positive;T1. East/West
+莊澤宣;Zhuang Zexuan;;Male;Chinese;湖北;Other;1896;1976;Post1895;USA;USA;scholar;social sciences;;scholar (psychology), educator;liumei;Positive;T1. East/West
+衞挺生;Wei Tingsheng;;Male;Chinese;湖北;Other;1890;1977;Pre1895;USA;USA;scholar;social sciences;;scholar (economist, historian);liumei;Positive;T1. East/West
+陳序經;Chen Xujing;;Male;Chinese;廣東;Other;1903;1967;Post1895;USA;USA;scholar;social sciences;;sociologist;liumei;Positive;T3. Society/Culture
+陳植;Chen Zhi;;Male;Chinese;江蘇;江蘇;1902;2001;Post1895;USA;USA;other;architect;;architect;liumei;Positive;T3. Society/Culture
+顧毓琇;Gu Yuxiu;;Male;Chinese;江蘇;江蘇;1902;2002;Post1895;USA;USA;other;engineer;;engineer, musician, novelist, poet, and politician;liumei;Positive;T3. Society/Culture

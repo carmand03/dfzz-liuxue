@@ -1,0 +1,45 @@
+﻿Name;Pinyin;筆名;Nationality;Birthplace2;Birthplace;Generation;BirthYear;DeathYear;age_at_death;edu_country_main;edu_country2;occupation_main;occupation2;party;field;corpus;Sentiment;topicluster
+誦虞;Song Yu;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Sino-Japanese Tensions
+朔一;Shuo Yi;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Sino-Japanese Tensions
+仲雲;Zhong Yun;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Sino-Japanese Tensions
+南雁;Nan Yan;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Sino-Japanese Tensions
+漢聲;Han Sheng;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Sino-Japanese Tensions
+吳德彰;Wu Dezhang;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Education/Academia
+民質;Min Zhi;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Peace and Cultural Exchanges
+Y.D.;Y .D.;;NA;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Peace and Cultural Exchanges
+黃惟志;Huang Weizhi;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Peace and Cultural Exchanges
+王士森;Wang Shisen;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Social Construction
+于葦;Wu Wei;;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Sino-Japanese Tensions
+朱正;Zhu Zheng;;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Social Construction
+君實;Jun Shi;;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Peace and Cultural Exchanges
+徐恆耀;Xu Hengyao;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Social Construction
+於曙巒;Wu Shuluan;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Social Construction
+袁釗;Yuan Zhao;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Negative;Sino-Japanese Tensions
+周逸雲;Zhou Yiyun;;Chinese;NA;NA;1895-1911;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Nation-Building
+傖父;Cang Fu;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;NA;NA;NA;NA;liuri;Positive;Nation-Building
+姚振華;Yao Zhenhua;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;professional writer;translator;NA;translator;liuri;Negative;Sino-Japanese Tensions
+坂本義孝;Yoshitaka Sakamoto;;Japanese;NA;NA;1895-1911;NA;NA;NA;Japan;Japan;scholar;humanities;NA;scholar;liuri;Positive;Sino-Japanese Tensions
+陳嘉異;Chen Jiayi;;Chinese;NA;NA;1860-1894;NA;NA;NA;China-NA;NA;scholar;humanities;NA;intellectual, writer, philosopher;liuri;Positive;Peace and Cultural Exchanges
+周綬章;Zhou Shouzhang;;Chinese;NA;NA;NA;NA;NA;NA;China-NA;NA;scholar;social sciences;NA;economist;liuri;Positive;Sino-Japanese Tensions
+留日學生;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;Negative;Nation-Building
+于偉;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;NA;Positive;Sino-Japanese Tensions
+周孝庵;Zhou Xiaoan;;Chinese;江蘇;江蘇;1895-1911;1900;NA;NA;China-NA;China;professional writer;journalist;NA;journalist;liuri;Negative;Social Construction
+吳澤炎;Wu Zeyan;;Chinese;江蘇;江蘇;1912-1949;1913;1995;82;China-NA;China;scholar;humanities;NA;lexicographer, historian, editor and publisher.;liuri;Positive;Sino-Japanese Tensions
+蔣維喬;Jiang Weijiao;;Chinese;江蘇;江蘇;1860-1894;1874;1958;84;China-NA;China;scholar;humanities;NA;philosopher, educator, Buddhist scholar;liuri;Negative;Sino-Japanese Tensions
+王成組;Wang Chengzu;;Chinese;江蘇;江蘇;1895-1911;1902;1987;85;USA;USA;scholar;social sciences;NA;scholar (geography, history);liuri;Positive;Sino-Japanese Tensions
+朱經農;Zhu Jingnong;;Chinese;江蘇;江蘇;1860-1894;1887;1951;64;Japan;Japan;scholar-official;social sciences;NA;scholar, educator and government official;liuri;Positive;Nation-Building
+胡先驌;Hu Xiansu;;Chinese;Other;江西;1860-1894;1894;1968;74;USA;USA;scholar;natural sciences;NA;botanist, educator, cultural scholar;liuri;Positive;Education/Academia
+王造時;Wang Zaoshi;;Chinese;Other;江西;1895-1911;1903;1971;68;USA;USA, UK;scholar;social sciences;DL;lawyer, scholar;liuri;Positive;Sino-Japanese Tensions
+王桐齡;Wang Tongling;;Chinese;Other;河北;1860-1894;1878;1953;75;Japan;Japan;scholar;humanities;NA;historian;liuri;Negative;Sino-Japanese Tensions
+邵元冲;Shao Yuanchong;;Chinese;浙江;浙江;1860-1894;1890;1936;46;Japan-USA;Japan, USA;official-bureaucrat;legislative;TMH-GMD;politician;liuri;Positive;Social Construction
+章錫琛;Zhang Xichen;高勞;Chinese;浙江;浙江;1860-1894;1889;1969;80;China-NA;China;professional writer;editor, publisher;NA;editor, publisher;liuri;Negative;Peace and Cultural Exchanges
+張梓生;Zhang Zisheng;;Chinese;浙江;浙江;1860-1894;1892;1967;75;China-NA;China;professional writer;journalist;NA;editor, journalist, and publisher;liuri;Negative;Sino-Japanese Tensions
+周由廑;Zhou Youjin;T. T. Eugene Tseu;Chinese;浙江;浙江;1860-1894;1882;NA;NA;China-NA;China;scholar;humanities;NA;educator and writer;liuri;Positive;Education/Academia
+周憲文;Zhou Xianwen;毅恒, 質彬;Chinese;浙江;浙江;1895-1911;1907;NA;NA;Japan;Japan;scholar;social sciences;NA;scholar (economics, law), editor, translator;liuri;Positive;Sino-Japanese Tensions
+李權時;Li Quanshi;;Chinese;浙江;浙江;1895-1911;1895;1982;87;USA;USA;scholar;social sciences;NA;economist;liuri;Negative;Social Construction
+李立俠;Li Lixia;;Chinese;Other;湖北;1895-1911;1909;NA;NA;Japan;Japan;official-bureaucrat;finance;NA;politician, bureaucrat, financier;liuri;Negative;Sino-Japanese Tensions
+馬伯援;Ma Boyuan;;Chinese;Other;湖北;1860-1894;1884;1939;55;Japan-USA;Japan, USA;official-bureaucrat;military;TMH-GMD;politician;liuri;Negative;Sino-Japanese Tensions
+唐有壬;Tang Youren;;Chinese;Other;湖南;1860-1894;1894;1935;41;Japan;Japan;official-bureaucrat;diplomacy;GMD;politician, diplomat;liuri;Negative;Nation-Building
+程樹仁;Cheng Shuren;;Chinese;福建;福建;1895-1911;1895;1974;79;USA;USA;other;movie industry;NA;movie studies;liuri;Negative;Peace and Cultural Exchanges
+黎正甫;Li Zhengfu;;Chinese;福建;福建;1895-1911;1908;NA;NA;China-NA;China;professional writer;editor, publisher;NA;editor, scholar;liuri;Positive;Sino-Japanese Tensions
+陳北鷗;Chen Beiou;北鷗;Chinese;福建;福建;1895-1911;1911;1983;72;Japan;Japan;professional writer;editor, publisher;NA;writer, editor;liuri;Negative;Education/Academia
