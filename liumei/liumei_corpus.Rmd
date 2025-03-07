@@ -1,0 +1,993 @@
+---
+title: "American-returned students in 東方雜誌"
+subtitle: "A Corpus-Based Analysis" 
+author: "Cécile Armand"
+date: "`r lubridate::today()`"
+tags: [United States, press, returned students]   
+abstract: |
+  This document provides the code for exploring how the American-returned students were discussed in the Chinese periodical *Dongfang zazhi* 東方雜誌 (Eastern Miscellany) from 1905 to 1948. 
+  
+   <style>
+    body {
+    text-align: justify}
+  </style>
+    
+output: 
+  html_document:
+    toc: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: false
+    toc_depth: 2
+    number_sections: false
+    code_folding: show # hide
+    fig_caption: true
+    df_print: paged
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(histtext)
+library(dplyr)
+library(tidyverse)
+library(fastTextR)
+library(hrbrthemes)
+library(viridis)
+library(tidytext)
+library(stm)
+library(plotly)
+library(FactoMineR)
+library(reshape)
+library(RColorBrewer)
+library(wordcloud)
+library(wordcloud2)
+
+```
+
+
+```{r warning = FALSE, message = FALSE, echo = FALSE}
+load(file = "liumei_corpus.RData")
+```
+
+# Introduction 
+
+In this paper, we used *Dongfang zazhi* 東方雜誌 (*The Eastern Miscellany*)—a major intellectual journal published by the Commercial Press from 1904 to 1948 — as our primary source to examine the debates surrounding Chinese students returning from the United States during the late Qing and Republican eras. Our analysis is based on the full-text, semantically enriched version of this journal, available through the Modern China Textual Database. Using this resource, we conducted a corpus-based analysis with the [HistText](https://jdmdh.episciences.org/12536) R package developed by the [ENP-China project](https://www.enpchina.eu/) for analyzing large collections of historical Chinese texts.
+
+# Corpus Building
+
+## Basic keyword search
+
+Simple keyword search (224 documents)
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+library(histtext)
+
+liumei <- search_documents('"留美"', corpus="dongfangzz") 
+
+```
+
+## Expanded search using embedding 
+
+Pre-trained embeddings are available at : https://sharedocs.huma-num.fr/#/2547/8997/6-HistText/Embeddings 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+library("fastTextR")
+
+model <- fasttext()
+model$load("~/embeddings/toastynews.bin")  # load embedding 
+nearest_neighbors <- ft_nearest_neighbors(model,"留美", k = 30L) # find neighbors
+nearest_neighbors <- names(nearest_neighbors)
+
+# Add selected terms to the query (264 results)
+
+liumei_exp <- search_documents('"留美"|"旅美"', corpus="dongfangzz") 
+
+```
+
+## Concordance
+
+Inspect keywords in context using concordance (built-in function included in HistText): 
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+liumei_conc <- search_concordance('"留美"|"旅美"', corpus="dongfangzz") # 408 occurrences
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_conc
+
+```
+
+## Filter relevant results
+
+Select only documents that refer to students (143 documents remain): 
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Create a vector with relevant expressions for filtering (study, youth)
+
+xue <- c("學", "靑年")
+xue_vec <- paste(xue, sep = "", collapse = "|")
+
+# Search the vector within the target fields (After, Before, Title)
+
+library(dplyr)
+
+liumei_conc <- liumei_conc %>% mutate(xue = str_extract(After, xue_vec)) 
+liumei_conc <- liumei_conc %>% mutate(xue2 = str_extract(Before, xue_vec))
+liumei_conc <- liumei_conc %>% mutate(xue3 = str_extract(Title, xue_vec)) 
+liumei_conc <- liumei_conc %>% mutate(match2 = paste0(xue, xue2, xue3))
+
+# Eliminate non matches 
+
+liumei_conc_filtered <- liumei_conc %>% filter(!match2 == "NANANA") # 143 occurrences 
+
+# Export list of documents for manual checking 
+
+write.csv(liumei_conc_filtered, "liumei_conc_to_check.csv")
+
+# Re-import list of manually filtered documents (143)
+
+library(readr)
+liumei_filtered <- read_csv("~/data/liumei_filtered.csv")
+
+```
+
+## Retrieve documents metadata and full text
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+liumei_meta <- get_search_fields_content(liumei_filtered, corpus="dongfangzz", 
+                                        search_fields=c(list_search_fields("dongfangzz"),
+                                                        list_filter_fields("dongfangzz")))
+
+# Extract year of publication (first four digits of document Id)
+
+liumei_meta <- liumei_meta %>%
+  mutate(Year = str_extract(DocId, "\\d{4}")) %>%
+  mutate(Year = as.numeric(Year))
+
+liumei_meta <- liumei_meta %>% relocate(Year, .after = DocId)
+
+```                                                        
+                                                        
+```{r warning = FALSE, message = FALSE}
+liumei_meta
+```
+
+## Article segmentation
+
+Among our results, 14 documents consist of short, unrelated news pieces, where our subject of inquiry appears only as a limited segment within a broader text. We manually curated these documents, extracting only the relevant segments that focus on our object of study (i.e., American-returned students): 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Import properly segmented documents (14)
+
+liumei_segmented <- read_delim("~/data/liumei_segmented.csv", 
+                              delim = ";", escape_double = FALSE, trim_ws = TRUE)
+
+liumei_segmented <- liumei_segmented %>%  dplyr:: rename(text_seg = text)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_segmented
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Join with complete list of documents and remove duplicates
+
+liumei_clean <- left_join(liumei_meta, liumei_segmented)
+liumei_clean <- liumei_clean %>% unique()
+
+# Replace missing text in the "text_seg" columns by the original text 
+
+liumei_clean <- liumei_clean %>%
+  mutate(text_seg = ifelse(is.na(text_seg), text, text_seg))
+
+liumei_clean <- liumei_clean %>% relocate(text, .before = text_seg)
+
+# Compute text length 
+
+liumei_clean <- liumei_clean %>% mutate(length = nchar(text)) %>% mutate(length_seg = nchar(text_seg))
+liumei_clean <- liumei_clean %>% relocate(category, .before = category_strd)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_clean
+
+```
+
+# Corpus Exploration
+
+## Distribution over time 
+
+```{r warning = FALSE, message = FALSE}
+
+library(ggplot2)
+library(hrbrthemes)
+library(viridis)
+
+liumei_clean %>% 
+  ggplot( aes(x=Year)) +
+  geom_histogram( binwidth=1, fill="#69b3a2", color="#e9ecef", alpha=0.9) +
+  ggtitle("Bin size = 1") +
+  theme_ipsum() +
+  theme(
+    plot.title = element_text(size=15)
+  ) +
+  labs(title = "American-returned students in 東方雜誌",
+       x = "Year",
+       y = "Number of articles")
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compare with the entire collection using the "stats_date()" function included in HistText
+
+liumei_date <- liumei_year %>% rename(Date = Year)
+liumei_stats <- stats_date(liumei_date,"dongfangzz",over_all=TRUE, to_plot = FALSE)
+stats_date(liumei_date,"dongfangzz", over_all=TRUE, to_plot = TRUE)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+stats_date(liumei_date,"dongfangzz",over_all=TRUE, to_plot = TRUE)
+
+```
+
+## Distribution by category 
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_clean %>% group_by(category) %>% count(sort = TRUE) %>% mutate(percent = n/143*100)
+liumei_clean %>% group_by(category_strd) %>% count(sort = TRUE) %>% mutate(percent = n/143*100)
+liumei_clean %>% group_by(category_sup) %>% count(sort = TRUE) %>% mutate(percent = n/143*100)
+
+```
+
+## Save and export 
+
+Save and export the resulting corpus and statistics as dataframes: 
+```{r warning = FALSE, message = FALSE, eval=FALSE}
+
+write.csv(liumei_clean, "~/output/liumei_clean.csv")
+write.csv(liumei_stats, "~/output/liumei_stats.csv")
+```
+
+# Tokenization
+
+Tokenization, the process of segmenting text into words, is a crucial preliminary step for text analysis, including word frequency counting, topic modeling, and sentiment analysis. However, Chinese word segmentation for early 20th-century texts presents unique challenges due to the language's transition from classical *wenyan*—the literary language of the imperial administration and *literati*, where one character typically corresponds to one word—to a national (*guoyu*) and vernacular language (*baihua*) closer to modern Mandarin, characterized by more complex forms and diverse word combinations.
+
+For this study, we employed the latest version (2023) of a tokenizer specifically designed for transitional Chinese, the linguistic stage of the period under investigation (Blouin et al., 2023). 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# First remove artificial white spaces from the raw text 
+
+liumei_to_token <- liumei_clean %>% 
+  mutate(text2 = str_replace_all(text_seg, "　", ""))%>% 
+  mutate(text2 = str_replace_all(text2, " ", "")) %>% 　
+  relocate(text2, .after = text_seg)
+
+liumei_to_token <- liumei_to_token %>% mutate(length2 = nchar(text2))
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_to_token
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Apply the tokenizer
+
+liumei_tokenized <- cws_on_df(liumei_to_token,
+                             text_column = "text2",
+                             id_column = "DocId",
+                             model = "trftc_shunpao_23:zh:cws",
+                             detailed_output = FALSE,
+                             token_separator = " ",
+                             verbose = TRUE)
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_tokenized
+
+```
+<br>
+**Important Note**: When the text exceeds 300 characters, the tokenizer automatically splits the document into multiple lines. To reconstruct the article, we need to merge these text segments back into a continuous document. 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+liumei_token_merged <- liumei_tokenized %>%
+  group_by(DocId) %>%
+  summarise(text_token =paste(Text,collapse=''))
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_token_merged
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+# join with metadata
+
+liumei_tokenized_meta <- left_join(liumei_token_merged, liumei_clean)
+liumei_tokenized_meta <- liumei_tokenized_meta %>% relocate(text_token, .after = text_seg)
+liumei_tokenized_meta <- liumei_tokenized_meta %>% mutate(lgth_tok_txt = nchar(text_token))
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_tokenized_meta
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# save results
+
+write.csv(liumei_tokenized_meta, "~/output/liumei_tokenized_meta.csv")
+
+```
+
+# Word Frequencies 
+
+Examining word frequencies is a useful exploratory step for gaining a preliminary understanding of the vocabulary before conducting more advanced analyses, such as topic modeling or sentiment analysis. 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+library(tidytext)
+
+liumei_tokens <- liumei_token_merged %>% 
+  unnest_tokens(output = token, input = text_token) 
+
+# remove noisy output 
+
+liumei_tokens_clean <- liumei_tokens %>% 
+  filter(stringr::str_detect(liumei_tokens$token, "[\\p{Han}]")) %>% 
+  mutate(token = str_replace_all(token, "一", "")) %>% 
+  mutate(token = str_replace_all(token, "[digits:]+", "")) %>% 
+  mutate(token = str_replace_all(token, "〇", "")) %>% 
+  mutate(token = str_replace_all(token, "◎", "")) %>% 
+  mutate(token = str_replace_all(token, "⊙", "")) %>% 
+  mutate(token = str_replace_all(token, "●", "")) %>% 
+  mutate(token = str_replace_all(token, "▲", "")) %>% 
+  mutate(token = str_replace_all(token, "△", "")) 
+
+liumei_tokens_clean <- liumei_tokens_clean %>% drop_na(token)
+
+library(dplyr)
+
+liumei_tokens_clean <- liumei_tokens_clean  %>% 
+  mutate(across(everything(), ~ifelse(.=="", NA, as.character(.))))
+
+liumei_tokens_clean <- liumei_tokens_clean %>% na.omit()
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_tokens_clean
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# join with metadata 
+
+liumei_no_text <- liumei_clean %>% select(c(1:9))
+liumei_tokens_meta <- left_join(liumei_tokens_clean, liumei_no_text)
+liumei_tokens_meta <- liumei_tokens_meta %>% mutate(tok_length = nchar(token))
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Count tokens 
+
+liumei_token_count <- liumei_tokens_meta %>% group_by(token, tok_length) %>% count() 
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_tokens_meta %>% group_by(token, tok_length) %>% count(sort = TRUE)  
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# save results
+
+write.csv(liumei_no_text, "~/output/liumei_no_text.csv")
+write.csv(liumei_tokens_meta, "~/output/liumei_tokens_meta.csv")
+write.csv(liumei_token_count, "~/output/liumei_token_count.csv")
+
+```
+
+# Topic Modeling
+
+In this research, we applied Structural Topic Modeling (STM), an LDA-based topic modeling method that incorporates metadata—such as publication date and article genre—allowing us to analyze how these factors influence the distribution of topics [(Roberts et al. 2019)](https://doi.org/10.18637/jss.v091.i02.). 
+
+## Corpus preparation
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+library(stm)
+library(stminsights)
+
+# Select metadata
+
+meta <- liumei_tokenized_meta %>% transmute(DocId, title, authors, category_sup, Year)  
+meta <- as.data.frame(meta)
+
+# Create stm corpus object 
+
+corpus <- stm::textProcessor(liumei_no_ad$text_token,
+                             metadata = meta, 
+                             stem = FALSE, 
+                             wordLengths = c(2, Inf), 
+                             customstopwords = c("中國", "因為", "可以", "因爲", "所以", "對於", "ion", "我們", "他們", "方面"),
+                             verbose = FALSE) 
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Determine threshold for removing words and documents based on frequency
+
+stm::plotRemoved(corpus$documents, lower.thresh = c(0,10, by=5)) 
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+out <- stm::prepDocuments(corpus$documents, 
+                          corpus$vocab, 
+                          corpus$meta) 
+
+# Removing 17794 of 24067 terms (17794 of 49982 tokens) due to frequency.
+# Your corpus now has 82 documents, 6273 terms and 32188 tokens.
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Inspect words removed 
+
+wordsremoved <- as_tibble(out$words.removed) 
+wordsremoved
+
+```
+
+## Model building 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Build a 5-topic model 
+
+mod.5 <- stm::stm(out$documents, 
+                  out$vocab, K=5, 
+                  prevalence =~ Year + category_sup, 
+                  data=out$meta, verbose = FALSE)
+
+# Incorporate year of publication and article category as co-variates
+
+year5 <- stm::estimateEffect(1:5 ~ Year, mod.5, meta=out$meta)
+cat5 <- stm::estimateEffect(1:5 ~ category_sup, mod.5, meta=out$meta)
+
+# run_stminsights() # use stm interface for a preliminary exploration (optional)
+
+```
+
+## Model exploration 
+
+### Model summary
+```{r warning = FALSE, message = FALSE}
+
+#  Topic proportions and words defining each topic
+
+plot.STM(mod.5,"summary", n = 7)
+
+```
+
+### Words per topic (beta)
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+library(tidytext)
+
+td_beta5 <- tidytext::tidy(mod.5) 
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+options(repr.plot.width=7, repr.plot.height=8, repr.plot.res=100) 
+
+td_beta5 %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  mutate(topic = paste0("Topic ", topic),
+         term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(term, beta, fill = as.factor(topic))) +
+  geom_col( show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free_y") +
+  coord_flip() +
+  scale_x_reordered() +
+  labs(x = NULL, y = expression(beta),
+       title = "Highest word probabilities for each topic",
+       subtitle = "Topics related to 留美 in 東方雜誌 (1905-1948)")
+
+```
+
+### Topic proportions 
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Extract topic proportions by document
+
+topicprop5 <-make.dt(mod.5, meta)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+topicprop5
+
+```
+
+### Topic proportions over time
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute topic proportions by year
+
+topic5prop <- topicprop5%>% select(c(2:6))
+
+topic_proportion_per_year5 <- aggregate(topic5prop, by = list(Year = topicprop5$Year), mean)
+
+library(reshape)
+dfviz5y <- melt(topic_proportion_per_year5, id.vars = "Year")
+
+# Change color palette
+
+library(RColorBrewer)
+
+color_palette5 <- brewer.pal(5, "Set3") 
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Plot topic proportions over year
+
+ggplot(dfviz5y, aes(x=Year, y=value, fill=variable)) + 
+  geom_bar(stat = "identity") + ylab("proportion") + 
+  scale_fill_manual(values = color_palette5, name = "Topic") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(title="Topics related to 留美 in 東方雜誌", 
+       subtitle = "Topic proportion over time (5-topic)")
+
+```
+
+## Topical Clusters
+
+This section aims to assign a synthetic variable to each document, representing its topical profile. This variable will be used in the final part of the article, which explores the correlation between document topics, tonal sentiment, and the authors' biographical profiles. To generate these synthetic variables, we applied Principal Component Analysis (PCA) and Hierarchical Clustering based on article topic proportions. 
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Principal Component Analysis (PCA) on Topic Proportions 
+
+pca5 <- topicprop5 %>% select(DocId, Topic1, Topic2, Topic3, Topic4, Topic5)
+pca5 <- pca5 %>% column_to_rownames("DocId")
+
+library(FactoMineR)
+
+res.PCA<-PCA(pca5,graph=FALSE)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+plot.PCA(res.PCA,choix='var',title="PCA Graph of Variables (topic proportions)")
+plot.PCA(res.PCA,title="PCA Graph of Individuals (documents)")
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Hierarchical Clustering to cluster documents with similar topical profiles 
+
+res.PCA<-PCA(pca5,ncp=4,graph=FALSE)
+res.HCPC<-HCPC(res.PCA,nb.clust=5,consol=FALSE,graph=FALSE)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+plot.HCPC(res.HCPC,choice='tree',title='Tree Map')
+plot.HCPC(res.HCPC,choice='map',draw.tree=FALSE,title='Factor Map')
+plot.HCPC(res.HCPC,choice='3D.map',ind.names=FALSE,centers.plot=FALSE,angle=60,title='3D-Tree on Factor Map')
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Extract clusters 
+pca_clusters <- as.data.frame(res.HCPC$data.clust)
+pca_clusters <- rownames_to_column(pca_clusters, "DocId") 
+pca_clusters <- pca_clusters %>% dplyr:: rename(topicluster = clust)
+
+# Label clusters 
+
+pca_clusters <- pca_clusters %>% mutate (topiclabel = fct_recode(topicluster, "T5. Regulation/Organization" = "1", 
+                                                                 "T4. Immigration/Economy" = "2", 
+                                                                 "T2. International Treaties" = "3", 
+                                                                 "T1. East/West" = "4", 
+                                                                 "T3. Society/Culture" = "5"))
+
+```
+
+
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# join with authors (see dedicated script for how to retrieve the authors)
+
+liumei_pca_id <- pca_clusters %>% select(DocId, topiclabel)
+
+liumei_pca_meta <- left_join(liumei_pca_id, liumei_clean)
+liumei_pca_meta <- liumei_pca_meta %>% select(-c(text, text_seg))
+liumei_authors_topic <- liumei_pca_meta %>% select(DocId, authors, topiclabel)
+
+
+liumei_authors_topic <- liumei_authors_topic %>% select(DocId, authors, topiclabel) %>%
+  mutate(Name = str_replace_all(authors, "\\[", "")) %>%
+  mutate(Name = str_replace_all(Name, "\\]", ""))%>%
+  mutate(Name = str_replace_all(Name, "\\'", ""))
+
+liumei_authors_topic <- liumei_authors_topic %>%
+  separate_rows(Name, sep = ",\\s*")
+
+liumei_authors_topic_unique <- liumei_authors_topic %>% select(authors, Name, topiclabel) %>% drop_na(Name) %>% unique()
+
+liumei_authors_joined2 <- left_join(liumei_author_joined_clean, liumei_authors_topic_unique)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_authors_joined2
+
+```
+
+# Sentiment Analysis
+
+## Load Dictionaries 
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# NRC lexicon 
+
+nrc_lexic <- read.delim("~/lexicon/Chinese-Traditional-NRC-EmoLex.txt")
+
+nrc_lexic <- nrc_lexic %>% dplyr::rename(token = Chinese.Traditional.Word) %>% 
+  select(token, negative, positive, English.Word) %>% 
+  rename(nrc_negative = negative, nrc_positive = positive)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+nrc_lexic
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Chinese (Taiwan) dictionaries
+
+tw_lexic <- read.csv("~/lexicon/opinion_word_utf8.csv", header=FALSE)
+
+# Rename variables
+
+tw_lexic <- tw_lexic %>% rename(token = V1, copeopi = V2, tw_positive = V3, tw_neutral = V4, 
+                                tw_negative = V5, tw_nonsent = V6, tw_nonword = V7)
+
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+tw_lexic
+
+```
+
+## Join dictionaries with our corpus
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+liumei_senti_nrc <- liumei_tokens_meta %>% 
+  select(DocId, Year, title, category_sup, authors, token, tok_length) %>%   
+  inner_join(nrc_lexic) 
+
+liumei_senti_nrc <- liumei_senti_nrc %>% unique()
+
+liumei_senti_tw <- liumei_tokens_meta %>% 
+  select(DocId, Year, title, category_sup, authors, token, tok_length) %>%   
+  inner_join(tw_lexic)
+
+liumei_senti_tw <- liumei_senti_tw %>% unique()
+
+liumei_senti <- full_join(liumei_senti_nrc, liumei_senti_tw)
+liumei_senti <- liumei_senti %>% relocate(English.Word, .after = token)
+liumei_senti <- liumei_senti %>% filter(tok_length >1)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_senti
+
+```
+
+## Most negative/postive terms
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute sentiment scores for each token 
+
+liumei_senti_token <- liumei_senti %>% select(token, English.Word, tok_length, nrc_negative, nrc_positive, 
+                                            copeopi, tw_negative, tw_positive, tw_neutral, tw_nonsent, tw_nonword) %>% 
+  mutate(nrc_ratio = (nrc_positive-nrc_negative), tw_ratio = (tw_positive - tw_negative)) %>% 
+  group_by(token) %>% add_tally() 
+
+liumei_senti_token <- liumei_senti_token %>% unique()
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most negative tokens 
+
+liumei_senti_token %>% select(token, English.Word, nrc_ratio) %>% arrange((nrc_ratio)) # based on NRC
+liumei_senti_token %>% select(token, English.Word, tw_ratio) %>% arrange((tw_ratio)) # based on ANTUSD 
+liumei_senti_token %>% select(token, English.Word, copeopi) %>% arrange((copeopi)) # based on CopeOpi
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most positive articles 
+
+liumei_senti_token %>% select(token, English.Word, nrc_ratio) %>% arrange(desc(nrc_ratio)) # based on NRC
+liumei_senti_token  %>% select(token, English.Word, tw_ratio) %>% arrange(desc(tw_ratio)) # based on ANTUSD 
+liumei_senti_token %>% select(token, English.Word, copeopi) %>% arrange(desc(copeopi)) # based on CopeOpi
+
+```
+
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Plot as wordcloud
+
+library(wordcloud2)
+
+nrc_positive <- liumei_senti_token %>%
+  filter(nrc_positive > 0) %>%  # Keep only positive sentiment tokens
+  select(token, n) 
+
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+wordcloud2(nrc_positive, size = 4, backgroundColor = "grey", color = "random-light")
+
+```
+
+
+```{r warning = FALSE, message = FALSE}
+
+library(reshape2)
+
+liumei_senti_token %>% drop_na(nrc_ratio) %>%
+  mutate(sentiment = ifelse(nrc_ratio > 0, "positive", "negative")) %>%
+  count(token, sentiment, sort = TRUE) %>%
+  acast(token ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("steelblue", "red"),
+                   max.words = 500, scale = c(2, 2))
+
+```
+
+## Most negative/positive articles
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute mean sentiment value per document
+
+liumei_senti_docs <- liumei_senti %>% group_by(DocId, Year, title, category_sup, authors) %>%
+  summarise(across(nrc_negative:tw_nonword, ~ mean(.x, na.rm = TRUE))) %>% 
+  mutate(nrc_ratio = (nrc_positive-nrc_negative)) %>% 
+  mutate(tw_ratio = (tw_positive-tw_negative))
+
+liumei_senti_docs <- liumei_senti_docs %>% relocate(nrc_ratio, .after = nrc_positive) %>% 
+  relocate(tw_ratio, .after = tw_positive)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most negative articles 
+
+liumei_senti_docs %>% select(DocId, Year, category_sup, title, nrc_ratio) %>% arrange((nrc_ratio)) # based on NRC
+liumei_senti_docs %>% select(DocId, Year, category_sup, title, tw_ratio) %>% arrange((tw_ratio)) # based on ANTUSD 
+liumei_senti_docs %>% select(DocId, Year, category_sup, title, copeopi) %>% arrange((copeopi)) # based on CopeOpi
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most positive articles 
+
+liumei_senti_docs %>% select(DocId, Year, category_sup, title, nrc_ratio) %>% arrange(desc(nrc_ratio)) # based on NRC
+liumei_senti_docs  %>% select(DocId, Year, category_sup, title, tw_ratio) %>% arrange(desc(tw_ratio)) # based on ANTUSD 
+liumei_senti_docs %>% select(DocId, Year, category_sup, title, copeopi) %>% arrange(desc(copeopi)) # based on CopeOpi
+
+```
+
+## Sentiment value by category
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute sentiment value by category
+
+liumei_senti_category <- liumei_senti_docs %>% 
+  group_by(category_sup) %>%
+  summarise(across(c("nrc_negative", "nrc_positive", "copeopi", "tw_negative", "tw_positive"), ~ mean(.x, na.rm = TRUE)))  %>% 
+  mutate(tw_ratio = (tw_positive-tw_negative)) %>% 
+  mutate(nrc_ratio = (nrc_positive-nrc_negative)) 
+
+liumei_senti_category <- liumei_senti_category %>% relocate(nrc_ratio, .after = nrc_positive) %>% 
+  relocate(tw_ratio, .after = tw_positive)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+liumei_senti_category
+
+```
+
+## Sentiment over time
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute sentiment value over time 
+
+liumei_senti_year<- liumei_senti_docs %>%
+  group_by(Year) %>%
+  summarise(across(c("nrc_negative", "nrc_positive", "copeopi", "tw_negative", "tw_positive"), ~ mean(.x, na.rm = TRUE)))  %>% 
+  mutate(tw_ratio = (tw_positive-tw_negative)) %>% 
+  mutate(nrc_ratio = (nrc_positive-nrc_negative)) %>% 
+  relocate(nrc_ratio, .after = nrc_positive) %>% 
+  relocate(tw_ratio, .after = tw_positive)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+p1 <- liumei_senti_year %>% 
+  ggplot() + 
+  geom_col(aes(x = Year, y = nrc_ratio)) + 
+  labs(title = "Sentiment analysis of 留美 in 東方雜誌", 
+       subtitle = "Sentiment value over time", 
+       x = "Year", 
+       y = "Mean value",
+       caption = "Based on NRC Lexicon (Canada)")
+
+p2 <- liumei_senti_year %>% 
+  ggplot() + 
+  geom_col(aes(x = Year, y = tw_ratio)) + 
+  labs(title = "Sentiment analysis of 留美 in 東方雜誌", 
+       subtitle = "Sentiment value over time", 
+       x = "Year", 
+       y = "Mean value",
+       caption = "Based on ANTUSD Lexicon (Taiwan)")
+
+p3 <- liumei_senti_year %>% 
+  ggplot() + 
+  geom_col(aes(x = Year, y = copeopi)) + 
+  labs(title = "Sentiment analysis of 留美 in 東方雜誌", 
+       subtitle = "Sentiment value over time", 
+       x = "Year", 
+       y = "Mean value",
+       caption = "Based on CopeOpi Lexicon (Taiwan)")
+
+
+library(plotly)
+ggplotly(p1)
+ggplotly(p2)
+ggplotly(p3)
+
+```
+
+## Sentiment and authors
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Compute sentiment value by author 
+
+liumei_senti_authors <- liumei_senti_docs %>%
+  group_by(authors) %>%
+  summarise(across(c("nrc_negative", "nrc_positive", "copeopi", "tw_negative", "tw_positive"), ~ mean(.x, na.rm = TRUE)))  %>% 
+  mutate(tw_ratio = (tw_positive-tw_negative)) %>% 
+  mutate(nrc_ratio = (nrc_positive-nrc_negative)) %>% 
+  relocate(nrc_ratio, .after = nrc_positive) %>% 
+  relocate(tw_ratio, .after = tw_positive)
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most negative authors 
+
+liumei_senti_authors %>% select(authors, nrc_ratio) %>% arrange((nrc_ratio)) # based on NRC
+liumei_senti_authors %>% select(authors, tw_ratio) %>% arrange((tw_ratio)) # based on ANTUSD 
+liumei_senti_authors %>% select(authors, copeopi) %>% arrange((copeopi)) # based on CopeOpi
+
+```
+
+```{r warning = FALSE, message = FALSE}
+
+# Most positive authors 
+
+liumei_senti_authors %>% select(authors, nrc_ratio) %>% arrange(desc(nrc_ratio)) # based on NRC
+liumei_senti_authors  %>% select(authors, tw_ratio) %>% arrange(desc(tw_ratio)) # based on ANTUSD 
+liumei_senti_authors %>% select(authors, copeopi) %>% arrange(desc(copeopi)) # based on CopeOpi
+
+```
+
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Join sentiment values with topic proportions
+
+liumei_topic_senti_docs <- left_join(pca_clusters, liumei_senti_docs)
+
+
+```
+
+```{r warning = FALSE, message = FALSE, eval = FALSE}
+
+# Export sentiment values
+
+write.csv(liumei_senti_token, "~/output/liumei_senti_token.csv")
+write.csv(liumei_senti_docs, "~/output/liumei_senti_docs.csv")
+write.csv(liumei_senti_year, "~/output/liumei_senti_year.csv")
+write.csv(liumei_senti_authors, "~/output/liumei_senti_authors.csv")
+write.csv(liumei_senti_category, "~/output/liumei_senti_category.csv")
+write.csv(liumei_topic_senti_docs, "~/output/liumei_topic_senti_docs.csv")
+
+```
+
+# Going Further
+
+For the next steps, see our script on [GitHub](https://github.com/carmand03/dfzz-liuxue) for extracting and analyzing biographical data related to the authors. Scripts for building and exploring a corpus centered on *liuMei* using the same method are also available on GitHub.
+
