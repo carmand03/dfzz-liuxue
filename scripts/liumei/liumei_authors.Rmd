@@ -45,7 +45,7 @@ load(file = "liumei_authors.RData")
 
 # Introduction 
 
-This document is part of a series dedicated to a corpus-based analysis of articles on Japan- and U.S.-returned students in *Dongfang zazhi* 東方雜誌 (*The Eastern Miscellany*). Building on a [previous script](https://bookdown.enpchina.eu//dfzz_liuxue/liumei.html) aimed at constructing and exploring a corpus focused on American-returned students, this document provides code for extracting and analyzing biographical information about the authors of these articles. 
+This document is part of a series dedicated to a corpus-based analysis of articles on Japan- and U.S.-returned students in *Dongfang zazhi* 東方雜誌 (*The Eastern Miscellany*). Building on a [previous script](https://bookdown.enpchina.eu/dfzz_liuxue/liumei_corpus.html) aimed at constructing and exploring a corpus focused on American-returned students, this document provides code for extracting and analyzing biographical information about the authors of these articles. 
 
 # Authorship Information
 
