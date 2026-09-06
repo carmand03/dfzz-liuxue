@@ -1,2 +1,2 @@
-# dfzz-liuxue
-Code and data for a comparative analysis of Japan- and US-returned students in 東方雜誌 (1904-1948).
+
+This repository provides the data and scripts used for a comparative analysis of narratives on Japan- and US-returned students in the intellectual journal *Dongfang zazhi* 東方雜誌 (1904-1948).
