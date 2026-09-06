@@ -9,5 +9,5 @@ It is organized into three main folders:
 
 3. **plots**: This folder contains various data visualizations produced in the course of the research.
 
-This study serves as the basis for the chapter titled “Beyond ‘Revolutionaries’ and ‘Modernizers’: A Corpus-Driven, Comparative Analysis of Japanese- and American-Returned Students in *Dongfang Zazhi* 東方雜誌 (1905–1948),” in Cécile Armand, Christian Henriot, and Ling-ling Lien (eds.), *Performing Power: Elites and the Making of Modern China* (Berlin: De Gruyter, 2026). 
+This study serves as the basis for the chapter titled “Beyond ‘Revolutionaries’ and ‘Modernizers’: A Corpus-Driven, Comparative Analysis of Japanese- and American-Returned Students in *Dongfang Zazhi* 東方雜誌 (1905–1948),” in Cécile Armand, Christian Henriot, and Ling-ling Lien (eds.), *Performing Power: Elites and the Making of Modern China* (Berlin: De Gruyter, 2027), pp. 27-70. 
 
